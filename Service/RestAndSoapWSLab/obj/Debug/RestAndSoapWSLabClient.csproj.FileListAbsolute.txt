@@ -1,0 +1,7 @@
+D:\Documents\cours\Reseaux\Services\VSProjects\RestAndSoapWSLabClient\RestAndSoapWSLabClient\bin\Debug\RestAndSoapWSLabClient.exe.config
+D:\Documents\cours\Reseaux\Services\VSProjects\RestAndSoapWSLabClient\RestAndSoapWSLabClient\bin\Debug\RestAndSoapWSLabClient.exe
+D:\Documents\cours\Reseaux\Services\VSProjects\RestAndSoapWSLabClient\RestAndSoapWSLabClient\bin\Debug\RestAndSoapWSLabClient.pdb
+D:\Documents\cours\Reseaux\Services\VSProjects\RestAndSoapWSLabClient\RestAndSoapWSLabClient\obj\Debug\RestAndSoapWSLabClient.csprojResolveAssemblyReference.cache
+D:\Documents\cours\Reseaux\Services\VSProjects\RestAndSoapWSLabClient\RestAndSoapWSLabClient\obj\Debug\RestAndSoapWSLabClient.csproj.CoreCompileInputs.cache
+D:\Documents\cours\Reseaux\Services\VSProjects\RestAndSoapWSLabClient\RestAndSoapWSLabClient\obj\Debug\RestAndSoapWSLabClient.exe
+D:\Documents\cours\Reseaux\Services\VSProjects\RestAndSoapWSLabClient\RestAndSoapWSLabClient\obj\Debug\RestAndSoapWSLabClient.pdb
