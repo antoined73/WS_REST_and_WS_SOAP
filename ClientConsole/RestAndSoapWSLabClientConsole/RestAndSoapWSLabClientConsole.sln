@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestAndSoapWSLabClientConsole", "RestAndSoapWSLabClientConsole\RestAndSoapWSLabClientConsole.csproj", "{E19AA9B0-4086-48EC-856B-A3CE87EEB793}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E19AA9B0-4086-48EC-856B-A3CE87EEB793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E19AA9B0-4086-48EC-856B-A3CE87EEB793}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E19AA9B0-4086-48EC-856B-A3CE87EEB793}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E19AA9B0-4086-48EC-856B-A3CE87EEB793}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F94E0ABF-8B14-496F-9367-8EE3590DC3AA}
+	EndGlobalSection
+EndGlobal
