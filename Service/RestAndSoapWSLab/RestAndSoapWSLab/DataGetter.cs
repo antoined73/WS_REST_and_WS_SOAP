@@ -18,7 +18,7 @@ namespace RestAndSoapWSLab
         private static DataGetter instance = null;
         private DataTable cache = null;
         private WebRequest request = null;
-
+        private int cacheTimeOut = 5;
 
         public DataGetter()
         {
@@ -27,6 +27,7 @@ namespace RestAndSoapWSLab
             cache.Columns.Add("StationName", typeof(string));
             cache.Columns.Add("CompositeStation", typeof(CompositeStation));
             cache.Columns.Add("DateAdded", typeof(DateTime));
+            MetricsGetter.GetInstance().OnNewCacheTimeout();
         }
 
         public static DataGetter GetInstance()
@@ -40,6 +41,7 @@ namespace RestAndSoapWSLab
 
         private string connectToServer(string url)
         {
+            MetricsGetter.GetInstance().OnNewRequestMade();
             // Create a request for the URL.
             request = WebRequest.Create(url);
             
@@ -64,6 +66,16 @@ namespace RestAndSoapWSLab
             {
                 return "";
             }
+        }
+
+        internal void setCacheTimeOutMinutes(int newValueMinutes)
+        {
+            cacheTimeOut = newValueMinutes;
+        }
+
+        internal int getCacheTimeOutMinutes()
+        {
+            return cacheTimeOut;
         }
 
         private List<CompositeContract> getContracts()
@@ -157,16 +169,17 @@ namespace RestAndSoapWSLab
             List<DataRow> rowsToDelete = new List<DataRow>();
             foreach (DataRow row in cache.Rows)
             {
-                if(((DateTime) row["DateAdded"]).AddMinutes(5).CompareTo(DateTime.Now)<0){ // check if informations are below the expiration date
-                    if (row["ContractName"].ToString().Equals(contractName) && (stationName != "" && row["StationName"].ToString().Contains(stationName)))
+                if(((DateTime) row["DateAdded"]).AddMinutes(cacheTimeOut).CompareTo(DateTime.Now)>=0){ // check if informations are below the expiration date
+                    if (row["ContractName"].ToString().Equals(contractName) && (stationName=="" || (stationName != "" && row["StationName"].ToString().Contains(stationName))))
                     {
                         stationsForThisContract.Add(((CompositeStation)row["CompositeStation"]));
+                        MetricsGetter.GetInstance().OnNewCacheTimeout();
                     }
                 }else{ //otherwise erase it
                     rowsToDelete.Add(row);
                 }
             }
-            if(rowsToDelete.Count > 0)
+            if(rowsToDelete.Count() > 0)
             {
                 foreach(DataRow rowToDelete in rowsToDelete)
                 {
@@ -174,7 +187,7 @@ namespace RestAndSoapWSLab
                 }
             }
 
-            if(stationsForThisContract.Count <= 0)
+            if(stationsForThisContract.Count() <= 0)
             {
                 //else request api
                 stationsForThisContract = getStationsOfContract(contractName);

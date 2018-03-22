@@ -34,5 +34,17 @@ namespace RestAndSoapWSLab
             DataGetter dataGetter = DataGetter.GetInstance();
             return dataGetter.getAllContracts();
         }
+
+        public int getCacheTimeOutMinutes()
+        {
+            DataGetter dataGetter = DataGetter.GetInstance();
+            return dataGetter.getCacheTimeOutMinutes();
+        }
+
+        public void setCacheTimeOutMinutes(int newValueMinutes)
+        {
+            DataGetter dataGetter = DataGetter.GetInstance();
+            dataGetter.setCacheTimeOutMinutes(newValueMinutes);
+        }
     }
 }

@@ -19,14 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8732/Service1/?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8732/Service1?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="9aa5d326-a8d6-4ee5-95f5-35c44a36eba9" SourceId="1" SourceUrl="http://localhost:8732/Service1/?xsd=xsd3" />
-    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="427f378a-7c3d-439d-a4f3-e83ed8e26549" SourceId="1" SourceUrl="http://localhost:8732/Service1/?wsdl" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="1b5c235d-8041-4e21-81e8-094f34b651c3" SourceId="1" SourceUrl="http://localhost:8732/Service1/?xsd=xsd0" />
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="790d9205-83f9-41e6-9126-970d4f06ad2d" SourceId="1" SourceUrl="http://localhost:8732/Service1/?xsd=xsd2" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="94d8d2f0-fa75-43c4-adac-c2da6f9b776c" SourceId="1" SourceUrl="http://localhost:8732/Service1/?xsd=xsd1" />
+    <MetadataFile FileName="Service1.xsd" MetadataType="Schema" ID="1c389be7-c565-403a-a808-667a1dc9eb94" SourceId="1" SourceUrl="http://localhost:8732/Service1?xsd=xsd3" />
+    <MetadataFile FileName="Service11.xsd" MetadataType="Schema" ID="bb8af4c4-f72d-4279-9c48-5ae91deaffeb" SourceId="1" SourceUrl="http://localhost:8732/Service1?xsd=xsd0" />
+    <MetadataFile FileName="Service11.wsdl" MetadataType="Wsdl" ID="c24786fd-8cb6-45da-ae53-3e4fbc6682a4" SourceId="1" SourceUrl="http://localhost:8732/Service1?wsdl" />
+    <MetadataFile FileName="Service12.xsd" MetadataType="Schema" ID="33ed1931-9648-43b7-882a-eb8ec4647aed" SourceId="1" SourceUrl="http://localhost:8732/Service1?xsd=xsd2" />
+    <MetadataFile FileName="Service13.xsd" MetadataType="Schema" ID="8cf5c7ca-e140-4507-8d58-dc3c633394a3" SourceId="1" SourceUrl="http://localhost:8732/Service1?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

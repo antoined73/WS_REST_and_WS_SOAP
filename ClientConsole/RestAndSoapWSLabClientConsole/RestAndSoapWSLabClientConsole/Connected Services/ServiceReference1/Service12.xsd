@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/RestAndSoapWSLab" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/RestAndSoapWSLab" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8732/Service1?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="CompositeStation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Available_Bike_Stands" type="xs:int" />
+      <xs:element minOccurs="0" name="Available_Bikes" type="xs:int" />
+      <xs:element minOccurs="0" name="Banking" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Bike_Stands" type="xs:int" />
+      <xs:element minOccurs="0" name="Bonus" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Contract_Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Last_Update" type="xs:long" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Number" type="xs:int" />
+      <xs:element minOccurs="0" name="Position" nillable="true" type="tns:Position" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CompositeStation" nillable="true" type="tns:CompositeStation" />
+  <xs:complexType name="Position">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Lat" type="xs:double" />
+      <xs:element minOccurs="0" name="Lng" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Position" nillable="true" type="tns:Position" />
+  <xs:complexType name="ArrayOfCompositeContract">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CompositeContract" nillable="true" type="tns:CompositeContract" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCompositeContract" nillable="true" type="tns:ArrayOfCompositeContract" />
+  <xs:complexType name="CompositeContract">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Cities" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Commercial_Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Country_Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CompositeContract" nillable="true" type="tns:CompositeContract" />
+</xs:schema>

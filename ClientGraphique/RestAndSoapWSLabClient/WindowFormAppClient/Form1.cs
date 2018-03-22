@@ -23,10 +23,6 @@ namespace WindowsFormsApp1
             client = new WindowFormAppClient.ServiceReference1.Service1Client();
             InitializeComponent();
             contractsNamesComboBox.DataSource = client.getContractsNames();
-            button1.Click += async (o, e) =>
-            {
-                listBox1.DataSource = client.getStationsNames(contractsNamesComboBox.SelectedItem.ToString(), stationNameTB.Text);
-            };
         }
 
         private void errorHandler()
@@ -51,6 +47,16 @@ namespace WindowsFormsApp1
            
 
             
+        }
+
+        private void contractsNamesComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listBox1.DataSource = client.getStationsNames(contractsNamesComboBox.SelectedItem.ToString(), stationNameTB.Text);
+        }
+
+        private void stationNameTB_TextChanged(object sender, EventArgs e)
+        {
+            listBox1.DataSource = client.getStationsNames(contractsNamesComboBox.SelectedItem.ToString(), stationNameTB.Text);
         }
     }
 

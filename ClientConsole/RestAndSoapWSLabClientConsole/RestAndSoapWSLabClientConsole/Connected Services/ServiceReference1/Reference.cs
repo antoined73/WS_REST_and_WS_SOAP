@@ -415,6 +415,18 @@ namespace RestAndSoapWSLabClientConsole.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getAllContracts", ReplyAction="http://tempuri.org/IService1/getAllContractsResponse")]
         System.Threading.Tasks.Task<RestAndSoapWSLabClientConsole.ServiceReference1.CompositeContract[]> getAllContractsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getCacheTimeOutMinutes", ReplyAction="http://tempuri.org/IService1/getCacheTimeOutMinutesResponse")]
+        int getCacheTimeOutMinutes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/getCacheTimeOutMinutes", ReplyAction="http://tempuri.org/IService1/getCacheTimeOutMinutesResponse")]
+        System.Threading.Tasks.Task<int> getCacheTimeOutMinutesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/setCacheTimeOutMinutes", ReplyAction="http://tempuri.org/IService1/setCacheTimeOutMinutesResponse")]
+        void setCacheTimeOutMinutes(int newValueMinutes);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/setCacheTimeOutMinutes", ReplyAction="http://tempuri.org/IService1/setCacheTimeOutMinutesResponse")]
+        System.Threading.Tasks.Task setCacheTimeOutMinutesAsync(int newValueMinutes);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -474,6 +486,22 @@ namespace RestAndSoapWSLabClientConsole.ServiceReference1 {
         
         public System.Threading.Tasks.Task<RestAndSoapWSLabClientConsole.ServiceReference1.CompositeContract[]> getAllContractsAsync() {
             return base.Channel.getAllContractsAsync();
+        }
+        
+        public int getCacheTimeOutMinutes() {
+            return base.Channel.getCacheTimeOutMinutes();
+        }
+        
+        public System.Threading.Tasks.Task<int> getCacheTimeOutMinutesAsync() {
+            return base.Channel.getCacheTimeOutMinutesAsync();
+        }
+        
+        public void setCacheTimeOutMinutes(int newValueMinutes) {
+            base.Channel.setCacheTimeOutMinutes(newValueMinutes);
+        }
+        
+        public System.Threading.Tasks.Task setCacheTimeOutMinutesAsync(int newValueMinutes) {
+            return base.Channel.setCacheTimeOutMinutesAsync(newValueMinutes);
         }
     }
 }

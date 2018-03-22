@@ -22,6 +22,12 @@ namespace RestAndSoapWSLab
 
         [OperationContract]
         List<CompositeContract> getAllContracts();
+
+        [OperationContract]
+        int getCacheTimeOutMinutes();
+
+        [OperationContract]
+        void setCacheTimeOutMinutes(int newValueMinutes);
     }
 
 
