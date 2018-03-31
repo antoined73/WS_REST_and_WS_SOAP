@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,14 +19,18 @@ namespace RestAndSoapWSLab
         private DataTable cache = null;
         private WebRequest request = null;
 
+       
+
+        private int cacheTimeOut = 5;
 
         public DataGetter()
         {
             this.cache = new DataTable();
             cache.Columns.Add("ContractName", typeof(string));
             cache.Columns.Add("StationName", typeof(string));
-            cache.Columns.Add("StationJOBject", typeof(string));
+            cache.Columns.Add("CompositeStation", typeof(CompositeStation));
             cache.Columns.Add("DateAdded", typeof(DateTime));
+            MetricsGetter.GetInstance().OnNewCacheTimeout();
         }
 
         public static DataGetter GetInstance()
@@ -39,6 +44,8 @@ namespace RestAndSoapWSLab
 
         private string connectToServer(string url)
         {
+            MetricsGetter.GetInstance().OnNewJCDecauxRequestMade();
+           
             // Create a request for the URL.
             request = WebRequest.Create(url);
             
@@ -48,7 +55,6 @@ namespace RestAndSoapWSLab
             try
             {
                 response = request.GetResponse();
-                ///////////////////request.BeginGetResponse(new AsyncCallback(FinishWebRequest), null);
                 // Get the stream containing content returned by the server.
                 Stream dataStream = response.GetResponseStream();
                 // Open the stream using a StreamReader for easy access.
@@ -66,31 +72,17 @@ namespace RestAndSoapWSLab
             }
         }
 
-        /**
-        private void FinishWebRequest(IAsyncResult result)
+        internal void setCacheTimeOutMinutes(int newValueMinutes)
         {
-            WebResponse response = null;
-            try
-            {
-                request.EndGetResponse(result);
-                // Get the stream containing content returned by the server.
-                Stream dataStream = response.GetResponseStream();
-                // Open the stream using a StreamReader for easy access.
-                StreamReader reader = new StreamReader(dataStream);
-                // Read the content.
-                string strResponse = reader.ReadToEnd();
-                // Clean up the streams and the response.
-                reader.Close();
-                response.Close();
-                return strResponse;
-            }
-            catch (System.Net.WebException)
-            {
-                return "";
-            }
-        }**/
+            cacheTimeOut = newValueMinutes;
+        }
 
-        private JArray getContracts()
+        internal int getCacheTimeOutMinutes()
+        {
+            return cacheTimeOut;
+        }
+
+        private List<CompositeContract> getContracts()
         {
             string url = URL_BASE + "contracts?apiKey="+API_KEY;
             string strResponse = connectToServer(url);
@@ -103,7 +95,8 @@ namespace RestAndSoapWSLab
             {
                 //let res empty because error
             }
-            return res;
+
+            return res.ToObject<List<CompositeContract>>();
         }
 
         
@@ -139,54 +132,58 @@ namespace RestAndSoapWSLab
             return res;
         }
 
-        private JArray getStationsOfContract(string contractName)
+        private List<CompositeStation> getStationsOfContract(string contractName)
         {
             string url = URL_BASE + "stations?contract="+contractName+"&apiKey=" + API_KEY;
             string strResponse = connectToServer(url);
             JArray res = new JArray();
+            List<CompositeStation> stations = new List<CompositeStation>();
             try
             {
                 res = JArray.Parse(strResponse);
-                foreach (JObject station in res) {
-                    cache.Rows.Add(contractName, station.GetValue("name"),res.ToString(), DateTime.Now);
+                foreach (JObject JStation in res) {
+                    CompositeStation station = JsonConvert.DeserializeObject<CompositeStation>(JStation.ToString());
+                    stations.Add(station);
+                    cache.Rows.Add(contractName, station.Name,station, DateTime.Now);
                 }
             }
             catch (Newtonsoft.Json.JsonReaderException)
             {
                 //let res empty because error
             }
-            return res;
+            return stations;
         }
 
-        public string getStationInfos(string contractName, string stationName)
+        public CompositeStation getStationInfos(string contractName, string stationName)
         {
-            foreach (JObject station in getStations(contractName,stationName))
+            foreach (CompositeStation station in getStations(contractName,stationName))
             {
-                if (station.GetValue("name").ToString().ToLower().Contains(stationName.ToLower()))
+                if (station.Name.ToLower().Contains(stationName.ToLower()))
                 {
-                    return station.ToString();
+                    return station;
                 }
             }
-            return "Aucune station portant ce nom a été trouvée";
+            return null;
         }
 
-        private JArray getStations(string contractName, string stationName)
+        private List<CompositeStation> getStations(string contractName, string stationName)
         {
             //if datatables with contractName and contains stationName take it in datatables
-            JArray stationsForThisContract = new JArray();
+            List<CompositeStation> stationsForThisContract = new List<CompositeStation>();
             List<DataRow> rowsToDelete = new List<DataRow>();
             foreach (DataRow row in cache.Rows)
             {
-                if(((DateTime) row["DateAdded"]).AddMinutes(5).CompareTo(DateTime.Now)<0){ // check if informations are below the expiration date
-                    if (row["ContractName"].ToString().Equals(contractName) && (stationName != "" && row["StationName"].ToString().Contains(stationName)))
+                if(((DateTime) row["DateAdded"]).AddMinutes(cacheTimeOut).CompareTo(DateTime.Now)>=0){ // check if informations are below the expiration date
+                    if (row["ContractName"].ToString().Equals(contractName) && (stationName=="" || (stationName != "" && row["StationName"].ToString().Contains(stationName))))
                     {
-                        stationsForThisContract.Add(JObject.Parse(row["StationJObject"].ToString()));
+                        stationsForThisContract.Add(((CompositeStation)row["CompositeStation"]));
+                        MetricsGetter.GetInstance().OnNewCacheTimeout();
                     }
                 }else{ //otherwise erase it
                     rowsToDelete.Add(row);
                 }
             }
-            if(rowsToDelete.Count > 0)
+            if(rowsToDelete.Count() > 0)
             {
                 foreach(DataRow rowToDelete in rowsToDelete)
                 {
@@ -194,7 +191,7 @@ namespace RestAndSoapWSLab
                 }
             }
 
-            if(stationsForThisContract.Count <= 0)
+            if(stationsForThisContract.Count() <= 0)
             {
                 //else request api
                 stationsForThisContract = getStationsOfContract(contractName);
@@ -207,32 +204,47 @@ namespace RestAndSoapWSLab
             List<string> names = new List<string>();
             if (stationName.Trim().Equals(""))
             {
-                foreach (JObject station in getStations(contractName,stationName))
+                foreach (CompositeStation station in getStations(contractName,stationName))
                 {
-                    names.Add(station.GetValue("name").ToString());
+                    names.Add(station.Name);
                 }
             }
             else
             {
-                foreach (JObject station in getStations(contractName, stationName))
+                foreach (CompositeStation station in getStations(contractName, stationName))
                 {
-                    if (station.GetValue("name").ToString().ToLower().Contains(stationName.ToLower()))
+                    if (station.Name.ToLower().Contains(stationName.ToLower()))
                     {
-                        names.Add(station.GetValue("name").ToString());
+                        names.Add(station.Name);
                     }
                 }
             }
             return names;
         }
 
-        public List<string> GetContractsNames()
+        public List<string> getContractsNames()
         {
             List<string> names = new List<string>();
-            foreach (JObject contract in getContracts())
+            foreach (CompositeContract contract in getContracts())
             {
-                names.Add(contract.GetValue("name").ToString());
+                names.Add(contract.Name);
             }
             return names;
+        }
+
+        public List<CompositeContract> getAllContracts()
+        {
+            List<CompositeContract> contracts = new List<CompositeContract>();
+            foreach (CompositeContract contract in getContracts())
+            {
+                contracts.Add(contract);
+            }
+            return contracts;
+        }
+
+        public DataTable GetCache()
+        {
+            return this.cache;
         }
     }
 }
