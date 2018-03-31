@@ -11,22 +11,14 @@ namespace RestAndSoapWSLabClientMonitoring
         IObserver<MetricsData> observer = null;
         ServiceReferenceMonitoring.ServiceMonitoringClient client = null;
         private int numberOfRequest = 0;
+        private int numberOfJCDecauxRequest = 0;
+        private int numberOfDataInCache;
+        private float averageResponseTime;
 
         public MetricsData()
         {
             client = new ServiceReferenceMonitoring.ServiceMonitoringClient();
             
-        }
-
-        public void StartConstantRefreshing()
-        {
-            var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromSeconds(1);
-
-            var timer = new System.Threading.Timer((e) =>
-            {
-                RefreshData();
-            }, null, startTimeSpan, periodTimeSpan);
         }
 
         public IDisposable Subscribe(IObserver<MetricsData> observer)
@@ -38,6 +30,9 @@ namespace RestAndSoapWSLabClientMonitoring
         public void RefreshData()
         {
             numberOfRequest = client.getNumberOfRequests();
+            numberOfDataInCache = client.getNumberOfDataInCache();
+            averageResponseTime = client.getAverageResponseTime();
+            numberOfJCDecauxRequest = client.getNumberOfJCDecauxRequests();
             if (observer != null)
             {
                 observer.OnNext(this);
@@ -47,6 +42,21 @@ namespace RestAndSoapWSLabClientMonitoring
         public int GetNumberOfRequest()
         {
             return numberOfRequest;
+        }
+
+        internal int GetNumberOfDataInCache()
+        {
+            return numberOfDataInCache;
+        }
+
+        internal float GetAverageResponseTime()
+        {
+            return averageResponseTime;
+        }
+
+        internal int GetNumberOfJCDecauxRequest()
+        {
+            return numberOfJCDecauxRequest;
         }
     }
 }

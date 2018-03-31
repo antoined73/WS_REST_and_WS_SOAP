@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace RestAndSoapWSLabClientMonitoring
 {
@@ -21,36 +22,7 @@ namespace RestAndSoapWSLabClientMonitoring
             metrics = new MetricsData();
             metrics.Subscribe(this);
             InitializeComponent();
-
-            metrics.StartConstantRefreshing();
-
-            // Fait buguer le rafraichissement auto du chiffre
-            /**
-            requestsDoneChart.Series = new SeriesCollection
-            {
-                new LineSeries
-                {
-                    Title = "Nombre de requêtes",
-                    Values = new ChartValues<int> { 0 }
-                }
-            };
-
-            requestsDoneChart.AxisX.Add(new Axis
-            {
-                Title = "Temps (min)",
-                Labels = new[] {"0", "1", "2", "3", "4", "5"}
-            });
-
-            requestsDoneChart.AxisY.Add(new Axis
-            {
-                Title = "Requêtes",
-                LabelFormatter = value => value.ToString("C")
-            });
-
-            requestsDoneChart.LegendLocation = LegendLocation.Right;**/
-
-            
-
+            this.timer1.Start();
         }
 
         public void OnCompleted()
@@ -63,15 +35,34 @@ namespace RestAndSoapWSLabClientMonitoring
             label1.Text = "error";
         }
 
-        public void OnNext(MetricsData met)
+        public void OnNext(MetricsData value)
         {
-            if (label1.InvokeRequired)
+            label1.Text = metrics.GetNumberOfRequest().ToString();
+            chart1.Series["Requests"].Points.AddY(metrics.GetNumberOfRequest());
+
+            label3.Text = metrics.GetNumberOfDataInCache().ToString();
+            chart5.Series["Requests"].Points.AddY(metrics.GetNumberOfDataInCache());
+
+            string average = metrics.GetAverageResponseTime().ToString();
+            if (average != "NaN")
             {
-                label1.Invoke(new MethodInvoker(delegate { label1.Text = met.GetNumberOfRequest().ToString(); }));
+                average = average.Substring(0, 4);
+                chart3.Series["Requests"].Points.AddY((metrics.GetAverageResponseTime()));
             }
+            else
+            {
+                chart3.Series["Requests"].Points.AddY(0);
+            }
+            label5.Text = average + " ms";
+            
 
-            //requestsDoneChart.Series[0].Values.Add(met.GetNumberOfRequest());
+            label7.Text = metrics.GetNumberOfJCDecauxRequest().ToString();
+            chart6.Series["Requests"].Points.AddY(metrics.GetNumberOfJCDecauxRequest());
+        }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            metrics.RefreshData();
         }
     }
 }

@@ -18,6 +18,9 @@ namespace RestAndSoapWSLab
         private static DataGetter instance = null;
         private DataTable cache = null;
         private WebRequest request = null;
+
+       
+
         private int cacheTimeOut = 5;
 
         public DataGetter()
@@ -41,7 +44,8 @@ namespace RestAndSoapWSLab
 
         private string connectToServer(string url)
         {
-            MetricsGetter.GetInstance().OnNewRequestMade();
+            MetricsGetter.GetInstance().OnNewJCDecauxRequestMade();
+           
             // Create a request for the URL.
             request = WebRequest.Create(url);
             
@@ -236,6 +240,11 @@ namespace RestAndSoapWSLab
                 contracts.Add(contract);
             }
             return contracts;
+        }
+
+        public DataTable GetCache()
+        {
+            return this.cache;
         }
     }
 }

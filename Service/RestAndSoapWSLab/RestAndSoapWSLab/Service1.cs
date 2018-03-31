@@ -13,31 +13,41 @@ namespace RestAndSoapWSLab
     {
         public CompositeStation getStationsInfos(string contractName, string stationName)
         {
+            StartNewRequest();
             DataGetter dataGetter = DataGetter.GetInstance();
+            EndNewRequest();
             return dataGetter.getStationInfos(contractName,stationName);
         }
 
         public List<string> getStationsNames(string city, string stationName)
         {
+            StartNewRequest();
             DataGetter dataGetter = DataGetter.GetInstance();
+            EndNewRequest();
             return dataGetter.getStationsNames(city, stationName);
         }
 
         public List<string> getContractsNames()
         {
+            StartNewRequest();
             DataGetter dataGetter = DataGetter.GetInstance();
+            EndNewRequest();
             return dataGetter.getContractsNames();
         }
 
         public List<CompositeContract> getAllContracts()
         {
+            StartNewRequest();
             DataGetter dataGetter = DataGetter.GetInstance();
+            EndNewRequest();
             return dataGetter.getAllContracts();
         }
 
         public int getCacheTimeOutMinutes()
         {
+            StartNewRequest();
             DataGetter dataGetter = DataGetter.GetInstance();
+            EndNewRequest();
             return dataGetter.getCacheTimeOutMinutes();
         }
 
@@ -45,6 +55,16 @@ namespace RestAndSoapWSLab
         {
             DataGetter dataGetter = DataGetter.GetInstance();
             dataGetter.setCacheTimeOutMinutes(newValueMinutes);
+        }
+
+        private void EndNewRequest()
+        {
+            MetricsGetter.GetInstance().OnNewRequestEnd();
+        }
+
+        private void StartNewRequest()
+        {
+            MetricsGetter.GetInstance().OnNewRequestStart();
         }
     }
 }

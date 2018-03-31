@@ -15,11 +15,29 @@ namespace RestAndSoapWSLabClientMonitoring.ServiceReferenceMonitoring {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReferenceMonitoring.IServiceMonitoring")]
     public interface IServiceMonitoring {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceMonitoring/getNumberOfJCDecauxRequests", ReplyAction="http://tempuri.org/IServiceMonitoring/getNumberOfJCDecauxRequestsResponse")]
+        int getNumberOfJCDecauxRequests();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceMonitoring/getNumberOfJCDecauxRequests", ReplyAction="http://tempuri.org/IServiceMonitoring/getNumberOfJCDecauxRequestsResponse")]
+        System.Threading.Tasks.Task<int> getNumberOfJCDecauxRequestsAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceMonitoring/getNumberOfRequests", ReplyAction="http://tempuri.org/IServiceMonitoring/getNumberOfRequestsResponse")]
         int getNumberOfRequests();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceMonitoring/getNumberOfRequests", ReplyAction="http://tempuri.org/IServiceMonitoring/getNumberOfRequestsResponse")]
         System.Threading.Tasks.Task<int> getNumberOfRequestsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceMonitoring/getNumberOfDataInCache", ReplyAction="http://tempuri.org/IServiceMonitoring/getNumberOfDataInCacheResponse")]
+        int getNumberOfDataInCache();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceMonitoring/getNumberOfDataInCache", ReplyAction="http://tempuri.org/IServiceMonitoring/getNumberOfDataInCacheResponse")]
+        System.Threading.Tasks.Task<int> getNumberOfDataInCacheAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceMonitoring/getAverageResponseTime", ReplyAction="http://tempuri.org/IServiceMonitoring/getAverageResponseTimeResponse")]
+        float getAverageResponseTime();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceMonitoring/getAverageResponseTime", ReplyAction="http://tempuri.org/IServiceMonitoring/getAverageResponseTimeResponse")]
+        System.Threading.Tasks.Task<float> getAverageResponseTimeAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -49,12 +67,36 @@ namespace RestAndSoapWSLabClientMonitoring.ServiceReferenceMonitoring {
                 base(binding, remoteAddress) {
         }
         
+        public int getNumberOfJCDecauxRequests() {
+            return base.Channel.getNumberOfJCDecauxRequests();
+        }
+        
+        public System.Threading.Tasks.Task<int> getNumberOfJCDecauxRequestsAsync() {
+            return base.Channel.getNumberOfJCDecauxRequestsAsync();
+        }
+        
         public int getNumberOfRequests() {
             return base.Channel.getNumberOfRequests();
         }
         
         public System.Threading.Tasks.Task<int> getNumberOfRequestsAsync() {
             return base.Channel.getNumberOfRequestsAsync();
+        }
+        
+        public int getNumberOfDataInCache() {
+            return base.Channel.getNumberOfDataInCache();
+        }
+        
+        public System.Threading.Tasks.Task<int> getNumberOfDataInCacheAsync() {
+            return base.Channel.getNumberOfDataInCacheAsync();
+        }
+        
+        public float getAverageResponseTime() {
+            return base.Channel.getAverageResponseTime();
+        }
+        
+        public System.Threading.Tasks.Task<float> getAverageResponseTimeAsync() {
+            return base.Channel.getAverageResponseTimeAsync();
         }
     }
 }

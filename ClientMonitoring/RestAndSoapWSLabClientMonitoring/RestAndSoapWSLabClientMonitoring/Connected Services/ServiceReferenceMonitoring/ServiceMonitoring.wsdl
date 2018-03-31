@@ -6,22 +6,79 @@
       <xsd:import schemaLocation="http://localhost:8732/Monitoring?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IServiceMonitoring_getNumberOfJCDecauxRequests_InputMessage">
+    <wsdl:part name="parameters" element="tns:getNumberOfJCDecauxRequests" />
+  </wsdl:message>
+  <wsdl:message name="IServiceMonitoring_getNumberOfJCDecauxRequests_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getNumberOfJCDecauxRequestsResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceMonitoring_getNumberOfRequests_InputMessage">
     <wsdl:part name="parameters" element="tns:getNumberOfRequests" />
   </wsdl:message>
   <wsdl:message name="IServiceMonitoring_getNumberOfRequests_OutputMessage">
     <wsdl:part name="parameters" element="tns:getNumberOfRequestsResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceMonitoring_getNumberOfDataInCache_InputMessage">
+    <wsdl:part name="parameters" element="tns:getNumberOfDataInCache" />
+  </wsdl:message>
+  <wsdl:message name="IServiceMonitoring_getNumberOfDataInCache_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getNumberOfDataInCacheResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceMonitoring_getAverageResponseTime_InputMessage">
+    <wsdl:part name="parameters" element="tns:getAverageResponseTime" />
+  </wsdl:message>
+  <wsdl:message name="IServiceMonitoring_getAverageResponseTime_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getAverageResponseTimeResponse" />
+  </wsdl:message>
   <wsdl:portType name="IServiceMonitoring">
+    <wsdl:operation name="getNumberOfJCDecauxRequests">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceMonitoring/getNumberOfJCDecauxRequests" message="tns:IServiceMonitoring_getNumberOfJCDecauxRequests_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceMonitoring/getNumberOfJCDecauxRequestsResponse" message="tns:IServiceMonitoring_getNumberOfJCDecauxRequests_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="getNumberOfRequests">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceMonitoring/getNumberOfRequests" message="tns:IServiceMonitoring_getNumberOfRequests_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceMonitoring/getNumberOfRequestsResponse" message="tns:IServiceMonitoring_getNumberOfRequests_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="getNumberOfDataInCache">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceMonitoring/getNumberOfDataInCache" message="tns:IServiceMonitoring_getNumberOfDataInCache_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceMonitoring/getNumberOfDataInCacheResponse" message="tns:IServiceMonitoring_getNumberOfDataInCache_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getAverageResponseTime">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceMonitoring/getAverageResponseTime" message="tns:IServiceMonitoring_getAverageResponseTime_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceMonitoring/getAverageResponseTimeResponse" message="tns:IServiceMonitoring_getAverageResponseTime_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="IServiceMonitoring" type="tns:IServiceMonitoring">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getNumberOfJCDecauxRequests">
+      <soap:operation soapAction="http://tempuri.org/IServiceMonitoring/getNumberOfJCDecauxRequests" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="getNumberOfRequests">
       <soap:operation soapAction="http://tempuri.org/IServiceMonitoring/getNumberOfRequests" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getNumberOfDataInCache">
+      <soap:operation soapAction="http://tempuri.org/IServiceMonitoring/getNumberOfDataInCache" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAverageResponseTime">
+      <soap:operation soapAction="http://tempuri.org/IServiceMonitoring/getAverageResponseTime" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

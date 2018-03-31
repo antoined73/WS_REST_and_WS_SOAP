@@ -11,7 +11,16 @@ namespace RestAndSoapWSLab
     public interface IServiceMonitoring
     {
         [OperationContract]
+        int getNumberOfJCDecauxRequests();
+
+        [OperationContract]
         int getNumberOfRequests();
+
+        [OperationContract]
+        int getNumberOfDataInCache();
+
+        [OperationContract]
+        float getAverageResponseTime();
     }
 
 }
