@@ -13,3 +13,4 @@ Il existe 3 clients:
 * Interface utilisateur graphique pour le client
 * Ajout d'un cache dans le service pour réduire les communications entre le service intermédiaire et l'api JCDecaux
 * Ajout d'une partie moniteur avec un client qui se connecte à la partie moniteur du service SOAP.
+* Communication Event Based

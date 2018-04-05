@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestAndSoapWSLabClientConsole.ServiceReference1;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,12 @@ namespace RestAndSoapWSLabClientConsole
     class ConsoleSystemClient
     {
         private ServiceReference1.Service1Client client;
+        private CityLookerServiceReference.CityLookerServiceClient lookerClient;
 
-        public ConsoleSystemClient()
+        public ConsoleSystemClient(CityLookerServiceReference.CityLookerServiceClient objClient)
         {
             client = new ServiceReference1.Service1Client();
+            lookerClient = objClient;
         }
 
         public void Launch()
@@ -77,11 +80,12 @@ namespace RestAndSoapWSLabClientConsole
             if (args.Count() >= 2)
             {
                 string contractName = args[1];
-                string stationName = (args.Count() == 3 ? args[2] : "");
-                ServiceReference1.CompositeStation stationInfo = client.getStationsInfos(contractName, stationName);
-                Console.WriteLine(stationInfo.Name+"\nAdresse : "+stationInfo.Address+"\nNombre de vélos disponibles = "+stationInfo.Available_Bikes);
+                string stationName = (args.Count() == 3 ? args[2] : "");           
+                lookerClient.GetNumberOfBikes(contractName,stationName);
+                //CompositeStation stationInfo = client.getStationsInfos(contractName, stationName);
+                //Console.WriteLine(stationInfo.Name+"\nAdresse : "+stationInfo.Address+"\nNombre de vélos disponibles = "+stationInfo.Available_Bikes);
             }
-            
+
         }
 
         private void DisplayStationsNames(string[] args)
